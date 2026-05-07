@@ -6,6 +6,7 @@ use App\Repositories\Contracts\TaskRepositoryInterface;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class TaskController extends Controller
 {
@@ -32,7 +33,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $users = User::all();
+        return view('tasks.create', compact('users'));
     }
 
     /**
@@ -65,8 +67,9 @@ class TaskController extends Controller
     public function edit($id)
     {
         $task = $this->taskRepo->find($id);
+        $users = User::all();
 
-        return view('tasks.edit', compact('task'));
+        return view('tasks.edit', compact('task', 'users'));
     }
 
     /**
